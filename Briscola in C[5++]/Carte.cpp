@@ -117,6 +117,14 @@ Carte::Carte(Carta& carta) {
 	AggiungiInCoda(carta);
 }
 
+Carte::Carte(Carte& carte) : coda(carte.coda) {}
+
+/*
+void Carte::operator=(Carte c) {
+	this->coda = c.coda;
+}
+*/
+
 Carta& Carte::PrendiCarta(int n) {
 	nodoCarte* aux = this->coda.primo;
 	Carta* carta = nullptr;
@@ -195,4 +203,15 @@ int Carte::getSize() {
 	}
 
 	return count;
+}
+
+void Carte::setCoda(nodoCarte* primo) {
+	this->coda.primo = primo;
+
+	
+	for (nodoCarte* aux = primo; aux != nullptr; aux = aux->next)
+		if (aux->next == nullptr) {
+			this->coda.ultimo = aux;
+			break;
+		}
 }

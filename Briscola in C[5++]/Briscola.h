@@ -17,6 +17,8 @@ public:
 	void Pesca(Carte& mazzo, int num_carte);
 	void stampaMano();
 	Carte getMano();
+	void OrdinaCarte();
+	//void setMano(Carte nuovaMano) { mano = nuovaMano; }
 };
 
 void inizializzaGiocatori(Giocatore**& giocatori);

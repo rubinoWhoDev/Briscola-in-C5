@@ -15,6 +15,7 @@ int main() {
 
 	for (int i = 0; i < 5; i++) {
 		giocatori[i]->Pesca(mazzo, 8);
+		giocatori[i]->OrdinaCarte();
 		giocatori[i]->stampaNome();
 		giocatori[i]->stampaMano();
 		cout << endl;
