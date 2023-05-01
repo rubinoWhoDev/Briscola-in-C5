@@ -1,0 +1,31 @@
+Progetto di: rubinoWhoDev
+Data: 1/05/2023
+
+BRISCOLA IN C[5++]
+
+FUNZIONALITA' DEL PROGRAMMA:
+
+Classe "Carta" e struttura dati lista di "Carta" nella classe "Carte"     IMPLEMENTATO (rubinoWhoDev)
+Classe "Giocatore" con lista di carte "Mano"                              IMPLEMENTATO (rubinoWhoDev)
+Inizializzazione dell'array di "Giocatore" e controllo dei nomi diversi   IMPLEMENTATO (rubinoWhoDev)
+Ordinamento decrescente della lista "Mano" per segno                      IMPLEMENTATO (rubinoWhoDev)
+Asta per decidere il chiamante                                            da implementare (migrare il codice da C a C++)
+Giro Morto, funzione giocaCarta() e sistema di assegnazione punti         da implementare
+Sistema di chiamata (carta chiamata e compagno)                           da implementare
+Giro Default e loop di gioco                                              da implementare
+Sistema per stabilire la squadra vincitrice                               da implementare
+
+
+*A QUESTO PUNTO IL PROGRAMMA SARA' FUNZIONALE*
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+FUNZIONALITA' ESTENSIVE FUTURE:
+
+Modalità "Monte Edition"                                                  possibile inizio dello sviluppo a programma funzionale
+Impostazioni del programma (punteggio minimo, modalità di gioco)          facile da implementare, possibilmente a programma funzionale
+Intelligenza Artificiale del computer (modalità di gioco con bot)         implementazione ad acquisizione competenze
+Sistema Server per gioco online                                           seh vabbe (implementazione ad acquisizione competenze)
+Rendering con librerie grafiche                                           buonanotte (implementazione ad acquisizione competenze)
+
+***************** CHIUNQUE VOGLIA COLLABORARE ALLA REALIZZAZIONE DEL PROGETTO E' IL BENVENUTO ********************************** 
