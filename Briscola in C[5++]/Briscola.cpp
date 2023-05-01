@@ -91,8 +91,23 @@ void Giocatore::OrdinaCarte() {
 	mano.setCoda(nodo);
 }
 
+bool nomeDoppione(const char* nome, Giocatore**& giocatori, int j) {
+	for (int i = 0; i < j; i++) {
+		if (strcmp(giocatori[i]->getNome(), nome) == 0)
+			return true;
+	}
+
+	return false;
+}
+
 void inizializzaGiocatori(Giocatore**& giocatori) {
 	giocatori = new Giocatore * [5];
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 5; i++) {
 		giocatori[i] = new Giocatore(i + 1);
+		while(nomeDoppione(giocatori[i]->getNome(), giocatori, i)) {
+			char nuovoNome[30];
+			std::cout << "Un altro giocatore ha gia' questo nome, inserirne uno diverso." << std::endl;
+			giocatori[i]->setName(i+1);
+		}
+	}
 }

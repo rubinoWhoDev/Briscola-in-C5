@@ -18,6 +18,7 @@ public:
 	void stampaMano();
 	Carte getMano();
 	void OrdinaCarte();
+	const char* getNome() { return nome; }
 	//void setMano(Carte nuovaMano) { mano = nuovaMano; }
 };
 
