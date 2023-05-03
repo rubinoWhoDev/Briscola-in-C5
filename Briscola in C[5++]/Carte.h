@@ -55,7 +55,7 @@ public:
 	Carta& PrendiCarta(int n);
 	int getSize();
 	nodoCarte*& getPrimo() { return this->coda.primo; }
-	codaCarte getCoda() { return this->coda; }
+	//codaCarte getCoda() { return this->coda; }
 	void setCoda(nodoCarte* primo);
 	//void operator=(Carte c);
 };

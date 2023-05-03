@@ -34,12 +34,12 @@ void Giocatore::Pesca(Carte& mazzo, int num_carte) {
 	}
 }
 
-Carte Giocatore::getMano() {
+Carte& Giocatore::getMano() {
 	return mano;
 }
 
 void Giocatore::stampaNome() {
-	std::cout << nome << std::endl;
+	std::cout << "Carte di " << nome << ":" << std::endl;
 }
 
 void Giocatore::stampaMano() {
@@ -101,7 +101,7 @@ bool nomeDoppione(const char* nome, Giocatore**& giocatori, int j) {
 }
 
 void inizializzaGiocatori(Giocatore**& giocatori) {
-	giocatori = new Giocatore * [5];
+	giocatori = new Giocatore* [5];
 	for (int i = 0; i < 5; i++) {
 		giocatori[i] = new Giocatore(i + 1);
 		while(nomeDoppione(giocatori[i]->getNome(), giocatori, i)) {
@@ -110,4 +110,84 @@ void inizializzaGiocatori(Giocatore**& giocatori) {
 			giocatori[i]->setName(i+1);
 		}
 	}
+}
+
+bool TuttiLisci(Giocatore**& giocatori) {
+	for (int i = 0; i < 5; i++) {
+		int totPunti = 0;
+		for (nodoCarte* aux = giocatori[i]->getMano().getPrimo(); aux != nullptr; aux = aux->next)
+			totPunti += aux->carta.getPunti();
+
+		if (totPunti == 0)
+			return true;
+	}
+
+	return false;
+}
+
+void StampaManoGiocatori(Giocatore**& giocatori) {
+	for (int i = 0; i < 5; i++) {
+		giocatori[i]->stampaNome();
+		giocatori[i]->stampaMano();
+	}
+}
+
+bool moreChiamanti(Giocatore**& giocatori) {
+	int counter = 0;
+	for (int i = 0; i < 5; i++) {
+		if (giocatori[i]->chiamante())
+			counter++;
+	}
+
+	return (counter > 1);
+}
+
+int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo) {
+	for (int i = 0; moreChiamanti(giocatori); i++) {
+		if (i == 5) i = 0;
+		if (!giocatori[i]->chiamante()) continue;
+
+		int input;
+		std::cout << "La mano di " << giocatori[i]->getNome() << ":" << std::endl << std::endl;
+		giocatori[i]->stampaMano();
+		std::cout << std::endl;
+		do {
+			std::cout << "Chiami? (Si parte da " << punteggioMinimo + 1 << ", inserisci un numero piu' basso per lasciare) (MAX 118) ";
+			std::cin >> input;
+		} while (input > 118);
+
+		if (input < punteggioMinimo) {
+			giocatori[i]->setChiamante(false);
+			system("cls");
+			continue;
+		}
+
+		punteggioMinimo = input;
+
+		if (punteggioMinimo == 118) {
+			for (int j = 0; j < 5; j++) {
+				if (j == i) continue;
+				giocatori[j]->setChiamante(false);
+			}
+		}
+		system("cls");
+	}
+
+	if (punteggioMinimo == 74) {
+		int input;
+		std::cout << "La mano di " << giocatori[4]->getNome() << ":" << std::endl << std::endl;
+		giocatori[4]->stampaMano();
+		std::cout << std::endl;
+		std::cout << "Chiami? (Si parte da " << punteggioMinimo + 1 << ", inserisci un numero piu' basso per lasciare) (MAX 118) ";
+		std::cin >> input;
+		if (input < punteggioMinimo) {
+			giocatori[4]->setChiamante(false);
+			system("cls");
+			return punteggioMinimo;
+		}
+		punteggioMinimo = input;
+		system("cls");
+	}
+
+	return punteggioMinimo;
 }
