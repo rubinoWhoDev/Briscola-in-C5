@@ -9,7 +9,7 @@ Classe "Carta" e struttura dati lista di "Carta" nella classe "Carte"     IMPLEM
 Classe "Giocatore" con lista di carte "Mano"                              IMPLEMENTATO (rubinoWhoDev)
 Inizializzazione dell'array di "Giocatore" e controllo dei nomi diversi   IMPLEMENTATO (rubinoWhoDev)
 Ordinamento decrescente della lista "Mano" per segno                      IMPLEMENTATO (rubinoWhoDev)
-Asta per decidere il chiamante                                            da implementare (migrare il codice da C a C++)
+Asta per decidere il chiamante                                            IMPLEMENTATO (rubinoWhoDev)
 Giro Morto, funzione giocaCarta() e sistema di assegnazione punti         da implementare
 Sistema di chiamata (carta chiamata e compagno)                           da implementare
 Giro Default e loop di gioco                                              da implementare
