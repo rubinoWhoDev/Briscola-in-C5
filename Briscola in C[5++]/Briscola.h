@@ -29,3 +29,5 @@ int Random(int min, int max);
 bool TuttiLisci(Giocatore**& giocatori);
 void StampaManoGiocatori(Giocatore**& giocatori);
 int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo);
+int InizioGioco(Giocatore**& giocatori, int punteggioMinimo);
+int WhoIsChiamante(Giocatore**& giocatori);

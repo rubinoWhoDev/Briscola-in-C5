@@ -9,32 +9,8 @@ int main() {
 	int punteggioMinimo = 74;
 	int primoAGiocare = Random(0, 4);
 
-	inizializzaGiocatori(giocatori);
-
-	while (punteggioMinimo == 74) {
-		Carte mazzo(40);
-
-		for (int i = 0; i < 5; i++) {
-			giocatori[i]->Pesca(mazzo, 8);
-			giocatori[i]->OrdinaCarte();
-			giocatori[i]->setChiamante(true);
-			/*
-			giocatori[i]->stampaNome();
-			giocatori[i]->stampaMano();
-			*/
-			cout << endl;
-		}
-
-		if (TuttiLisci(giocatori)) {
-			cout << "Un giocatore ha in mano tutti lisci." << endl;
-			StampaManoGiocatori(giocatori);
-			continue;
-		}
-		punteggioMinimo = GiroChiamanti(giocatori, punteggioMinimo);
-		for (int i = 0; i < 5; i++)
-			giocatori[i]->getMano().~Carte();
-	}
-	
+	punteggioMinimo = InizioGioco(giocatori, punteggioMinimo);
+	cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo << endl;
 
 	delete[] giocatori;
 	

@@ -191,3 +191,42 @@ int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo) {
 
 	return punteggioMinimo;
 }
+
+int InizioGioco(Giocatore**& giocatori, int punteggioMinimo) {
+	inizializzaGiocatori(giocatori);
+
+	while (punteggioMinimo == 74) {
+		Carte mazzo(40);
+
+		for (int i = 0; i < 5; i++) {
+			giocatori[i]->Pesca(mazzo, 8);
+			giocatori[i]->OrdinaCarte();
+			giocatori[i]->setChiamante(true);
+			/*
+			giocatori[i]->stampaNome();
+			giocatori[i]->stampaMano();
+			*/
+			std::cout << std::endl;
+		}
+
+		if (TuttiLisci(giocatori)) {
+			std::cout << "Un giocatore ha in mano tutti lisci." << std::endl;
+			StampaManoGiocatori(giocatori);
+			continue;
+		}
+		punteggioMinimo = GiroChiamanti(giocatori, punteggioMinimo);
+		for (int i = 0; i < 5; i++)
+			giocatori[i]->getMano().~Carte();
+	}
+
+	return punteggioMinimo;
+}
+
+int WhoIsChiamante(Giocatore**& giocatori) {
+	for (int i = 0; i < 5; i++) {
+		if (giocatori[i]->chiamante())
+			return i;
+	}
+
+	return -1;
+}
