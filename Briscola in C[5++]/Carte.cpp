@@ -19,6 +19,7 @@ Carta::Carta(int segno, unsigned int val) : valore(val) {
 		break;
 	case 3:
 		this->punti = 10;
+		break;
 	case 1:
 		this->punti = 11;
 		break;
