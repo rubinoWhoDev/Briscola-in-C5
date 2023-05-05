@@ -10,8 +10,8 @@ Classe "Giocatore" con lista di carte "Mano"                              IMPLEM
 Inizializzazione dell'array di "Giocatore" e controllo dei nomi diversi   IMPLEMENTATO (rubinoWhoDev)
 Ordinamento decrescente della lista "Mano" per segno                      IMPLEMENTATO (rubinoWhoDev)
 Asta per decidere il chiamante                                            IMPLEMENTATO (rubinoWhoDev)
-Giro Morto, funzione giocaCarta() e sistema di assegnazione punti         da implementare
-Sistema di chiamata (carta chiamata e compagno)                           da implementare
+Giro Morto e funzione giocaCarta()                                        IMPLEMENTATO (rubinoWhoDev)
+Sistema di chiamata e sistema di assegnazione punti                       da implementare
 Giro Default e loop di gioco                                              da implementare
 Sistema per stabilire la squadra vincitrice                               da implementare
 
