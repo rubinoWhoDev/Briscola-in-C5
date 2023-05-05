@@ -10,7 +10,7 @@ int main() {
 	int punteggioMinimo = 74;
 	int primoAGiocare = Random(0, 4);
 
-	punteggioMinimo = InizioGioco(giocatori, punteggioMinimo);
+	punteggioMinimo = InizioGioco(giocatori, punteggioMinimo, primoAGiocare);
 	/*briscola =*/ GiroMorto(giocatori, punteggioMinimo, primoAGiocare);
 
 	delete[] giocatori;

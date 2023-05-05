@@ -204,8 +204,11 @@ bool nessunChiamante(Giocatore**& giocatori) {
 	return noChiamante;
 }
 
-int InizioGioco(Giocatore**& giocatori, int punteggioMinimo) {
+int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare) {
 	inizializzaGiocatori(giocatori);
+
+	cout << endl << giocatori[(primoAGiocare - 1 < 0) ? 4 : primoAGiocare - 1]->getNome() << " mischia il mazzo..." << endl;
+	system("pause");
 
 	while (punteggioMinimo == 74) {
 		Carte mazzo(40);
