@@ -67,7 +67,7 @@ nodoCarte::nodoCarte(Carta& c) : carta(c){
 }
 
 void Carta::stampaCarta() {
-	std::cout << valoreToString() << " di " << segnoToString() << std::endl;
+	std::cout << valoreToString() << " di " << segnoToString();
 }
 
 void Carte::AggiungiInCoda(Carta& carta) {
@@ -88,9 +88,8 @@ void Carta::setProprietario(const char nome_proprietario[30]) {
 }
 
 void Carta::stampaProprietario() {
-	std::cout << proprietario << std::endl;
+	std::cout << proprietario;
 }
-
 
 Carte::Carte(int num_carte) {
 	coda.primo = nullptr;
@@ -164,6 +163,14 @@ void Carte::CancellaCarta(nodoCarte** coda, Carta& carta) {
 		delete aux;
 		return;
 	}
+	/*
+	if (aux == this->coda.ultimo) {
+		aux->next = nullptr;
+		this->coda.ultimo = aux2;
+		delete aux;
+		return;
+	}
+	*/
 
 	aux2->next = aux->next;
 	delete aux;
@@ -184,12 +191,22 @@ Carte::~Carte() {
 	*/
 }
 
-void Carte::Stampa() {
+void Carte::Stampa(bool proprietario) {
 	nodoCarte* aux = coda.primo;
 
+	int count = 1;
+
 	while (aux != nullptr) {
+		std::cout << count << ".\t";
 		aux->carta.stampaCarta();
+		if (proprietario) {
+			std::cout << "\t(giocata da ";
+			aux->carta.stampaProprietario();
+			std::cout << ") ";
+		}
+		std::cout << std::endl;
 		aux = aux->next;
+		count++;
 	}
 }
 
@@ -214,4 +231,32 @@ void Carte::setCoda(nodoCarte* primo) {
 			this->coda.ultimo = aux;
 			break;
 		}
+}
+
+Carta& Carte::getCarta(int n) {
+	nodoCarte* aux = this->coda.primo;
+	Carta* carta = nullptr;
+	int i = 0;
+	while (aux != nullptr) {
+		if (i == n) {
+			carta = new Carta(aux->carta);
+			break;
+		}
+		i++;
+		aux = aux->next;
+	}
+
+	return *carta;
+}
+
+int Carte::totPunti() {
+	nodoCarte* aux = this->coda.primo;
+	int totale = 0;
+
+	while (aux != nullptr) {
+		totale += aux->carta.getPunti();
+		aux = aux->next;
+	}
+
+	return totale;
 }

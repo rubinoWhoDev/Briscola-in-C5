@@ -2,6 +2,8 @@
 #include <iostream>
 #include <random>
 
+using namespace std;
+
 int Random(int min, int max) {
 	std::random_device rd; // obtain a random number from hardware
 	std::mt19937 gen(rd()); // seed the generator
@@ -146,7 +148,7 @@ int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo) {
 	for (int i = 0; moreChiamanti(giocatori); i++) {
 		if (i == 5) i = 0;
 		if (!giocatori[i]->chiamante()) continue;
-
+		system("cls");
 		int input;
 		std::cout << "La mano di " << giocatori[i]->getNome() << ":" << std::endl << std::endl;
 		giocatori[i]->stampaMano();
@@ -192,6 +194,16 @@ int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo) {
 	return punteggioMinimo;
 }
 
+bool nessunChiamante(Giocatore**& giocatori) {
+	bool noChiamante = true;
+	for (int i = 0; i < 5; i++) {
+		if (giocatori[i]->chiamante())
+			noChiamante = false;
+	}
+
+	return noChiamante;
+}
+
 int InizioGioco(Giocatore**& giocatori, int punteggioMinimo) {
 	inizializzaGiocatori(giocatori);
 
@@ -215,8 +227,9 @@ int InizioGioco(Giocatore**& giocatori, int punteggioMinimo) {
 			continue;
 		}
 		punteggioMinimo = GiroChiamanti(giocatori, punteggioMinimo);
-		for (int i = 0; i < 5; i++)
-			giocatori[i]->getMano().~Carte();
+		if (nessunChiamante(giocatori))
+			for (int i = 0; i < 5; i++)
+				giocatori[i]->getMano().~Carte();
 	}
 
 	return punteggioMinimo;
@@ -227,6 +240,56 @@ int WhoIsChiamante(Giocatore**& giocatori) {
 		if (giocatori[i]->chiamante())
 			return i;
 	}
-
 	return -1;
+}
+
+int ScegliCarta(Giocatore* giocatore) {
+	int scelta;
+
+	do {
+		cout << "Scegliere una carta da giocare: ";
+		cin >> scelta;
+		scelta--;
+	} while (scelta + 1 > giocatore->getMano().getSize() || scelta + 1 <= 0);
+
+	return scelta;
+}
+
+void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra, bool giroMorto = false, int punteggioMinimo = 0) {
+	int scelta;
+	do {
+
+		cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo << endl;
+		if (terra.getSize() > 0) {
+			cout << "Carte a terra: " << endl;;
+			terra.Stampa(true);
+			cout << endl << endl;
+		}
+
+
+		giocatori[i]->stampaNome();
+		giocatori[i]->stampaMano();
+		cout << endl << endl;
+		scelta = ScegliCarta(giocatori[i]);
+		if (giocatori[i]->getMano().getCarta(scelta).getPunti() + terra.totPunti() > (120) - punteggioMinimo)
+			cout << "Non puoi giocare questa carta perche' il chiamante non puo' perdere nel giro morto." << endl << endl;
+		cout << endl << endl;
+	} while (giocatori[i]->getMano().getCarta(scelta).getPunti() + terra.totPunti() > (120) - punteggioMinimo);
+
+	terra.AggiungiInCoda(giocatori[i]->getMano().PrendiCarta(scelta));
+}
+
+/*Briscola*/void GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare) {
+	Carte terra;
+
+	int count = 0;
+
+	for (int i = primoAGiocare; count < 5; i++) {
+		if (i == 5) i = 0;
+		GiocaCarta(giocatori, i, primoAGiocare, terra, true, punteggioMinimo);
+		system("cls");
+		count++;
+	}
+
+	terra.Stampa(true);
 }

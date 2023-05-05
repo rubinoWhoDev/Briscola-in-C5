@@ -31,3 +31,4 @@ void StampaManoGiocatori(Giocatore**& giocatori);
 int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo);
 int InizioGioco(Giocatore**& giocatori, int punteggioMinimo);
 int WhoIsChiamante(Giocatore**& giocatori);
+/*Briscola*/void GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare);

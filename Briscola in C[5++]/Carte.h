@@ -50,7 +50,8 @@ public:
 	~Carte();
 	void CancellaCarta(nodoCarte** coda, Carta& carta);
 	void AggiungiInCoda(Carta& carta);
-	void Stampa();
+	void Stampa(bool proprietario = false);
+	Carta& getCarta(int n);
 	Carta& PrendiCarta(Carta& carta);
 	Carta& PrendiCarta(int n);
 	int getSize();
@@ -58,4 +59,5 @@ public:
 	//codaCarte getCoda() { return this->coda; }
 	void setCoda(nodoCarte* primo);
 	//void operator=(Carte c);
+	int totPunti();
 };
