@@ -22,6 +22,8 @@ public:
 	//void setMano(Carte nuovaMano) { mano = nuovaMano; }
 	bool chiamante() { return isChiamante; }
 	void setChiamante(bool b) { isChiamante = b; }
+	void setCompagno(bool b) { isCompagno = b; }
+	bool compagno() { return isCompagno; }
 };
 
 void inizializzaGiocatori(Giocatore**& giocatori);
@@ -31,4 +33,4 @@ void StampaManoGiocatori(Giocatore**& giocatori);
 int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo);
 int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare);
 int WhoIsChiamante(Giocatore**& giocatori);
-/*Briscola*/void GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare);
+Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare);

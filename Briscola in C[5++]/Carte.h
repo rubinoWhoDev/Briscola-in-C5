@@ -22,11 +22,12 @@ public:
 	const char* valoreToString();
 	const char* segnoToString();
 	void setProprietario(const char nome_proprietario[30]);
+	char* getProprietario() { return proprietario; }
 	void stampaProprietario();
 	Segno getSegno() { return this->segno; }
 	unsigned int getValore() { return this->valore; }
 	unsigned int getPunti() { return this->punti; }
-	bool operator ==(Carta c);
+	bool operator ==(Carta& c);
 };
 
 struct nodoCarte {
@@ -54,6 +55,8 @@ public:
 	Carta& getCarta(int n);
 	Carta& PrendiCarta(Carta& carta);
 	Carta& PrendiCarta(int n);
+	bool CartaInLista(Carta& carta);
+	Carta* CercaInLista(Carta& carta);
 	int getSize();
 	nodoCarte*& getPrimo() { return this->coda.primo; }
 	//codaCarte getCoda() { return this->coda; }

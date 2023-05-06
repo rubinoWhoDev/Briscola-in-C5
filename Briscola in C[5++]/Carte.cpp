@@ -147,7 +147,7 @@ Carta& Carte::PrendiCarta(Carta& carta) {
 	return carta;
 }
 
-bool Carta::operator==(Carta c) {
+bool Carta::operator==(Carta& c) {
 	return (this->segno == c.segno && this->valore == c.valore);
 }
 
@@ -260,4 +260,28 @@ int Carte::totPunti() {
 	}
 
 	return totale;
+}
+
+bool Carte::CartaInLista(Carta& carta) {
+	nodoCarte* aux = coda.primo;
+
+	while (aux != nullptr) {
+		if (aux->carta == carta)
+			return true;
+		aux = aux->next;
+	}
+
+	return false;
+}
+
+Carta* Carte::CercaInLista(Carta& carta) {
+	nodoCarte* aux = coda.primo;
+
+	while (aux != nullptr) {
+		if (aux->carta == carta)
+			return &aux->carta;
+		aux = aux->next;
+	}
+
+	return nullptr;
 }

@@ -230,9 +230,14 @@ int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare) 
 			continue;
 		}
 		punteggioMinimo = GiroChiamanti(giocatori, punteggioMinimo);
-		if (nessunChiamante(giocatori))
-			for (int i = 0; i < 5; i++)
-				giocatori[i]->getMano().~Carte();
+		{
+			if (nessunChiamante(giocatori)) {
+				for (int i = 0; i < 5; i++)
+					giocatori[i]->getMano().~Carte();
+				cout << giocatori[(primoAGiocare - 1 < 0) ? 4 : primoAGiocare - 1]->getNome() << " mischia il mazzo..." << endl;
+				system("pause");
+			}
+		}
 	}
 
 	return punteggioMinimo;
@@ -262,7 +267,7 @@ void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra,
 	int scelta;
 	do {
 
-		cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo << endl;
+		cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo << endl << endl;
 		if (terra.getSize() > 0) {
 			cout << "Carte a terra: " << endl;;
 			terra.Stampa(true);
@@ -271,6 +276,7 @@ void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra,
 
 
 		giocatori[i]->stampaNome();
+		cout << endl;
 		giocatori[i]->stampaMano();
 		cout << endl << endl;
 		scelta = ScegliCarta(giocatori[i]);
@@ -282,9 +288,97 @@ void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra,
 	terra.AggiungiInCoda(giocatori[i]->getMano().PrendiCarta(scelta));
 }
 
-/*Briscola*/void GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare) {
-	Carte terra;
+const char* segnoToString(Segno segno) {
+	switch (segno) {
+	case ORO:
+		return "oro";
+	case MAZZE:
+		return "mazze";
+	case COPPE:
+		return "coppe";
+	case SPADE:
+		return "spade";
+	}
+}
 
+const char* valoreToString(int valore) {
+	switch (valore) {
+	case 10:
+		return "Re";
+	case 9:
+		return "Cavallo";
+	case 8:
+		return "Donna";
+	case 1:
+		return "Asso";
+	default:
+		char* num = new char[2];
+		sprintf_s(num, 2, "%d\0", valore);
+		return num;
+	}
+}
+
+Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra) {
+	int sceltaSegno, sceltaCarta;
+
+	cout << "Carte a terra: " << endl << endl;
+	terra.Stampa(true);
+
+	cout << endl << giocatori[WhoIsChiamante(giocatori)]->getNome() << " la tua mano:" << endl << endl;
+	giocatori[WhoIsChiamante(giocatori)]->stampaMano();
+
+	cout << endl << endl <<"Scegli il segno della briscola:" << endl << endl;
+
+	for (int i = 0; i < 4; i++) 
+		cout << i+1 << ".\t" << segnoToString((Segno)i) << endl;
+	
+	do {
+		cout << endl << endl << "Scelta: ";
+		cin >> sceltaSegno;
+	} while (sceltaSegno > 4 || sceltaSegno < 1);
+
+	Segno briscola = (Segno)(sceltaSegno-1);
+
+	cout << endl << giocatori[WhoIsChiamante(giocatori)]->getNome() << " scegli la carta da chiamare:" << endl << endl;
+
+	for (int i = 1; i <= 10; i++) 
+		cout << i << ".\t" << valoreToString(i) << " di " << segnoToString(briscola) << endl;
+	
+
+	do {
+		cout << endl << endl << "Scelta: ";
+		cin >> sceltaCarta;
+	} while (sceltaCarta > 10 || sceltaCarta < 1);
+
+	Carta cartaChiamata(briscola, sceltaCarta);
+
+	cout << endl << giocatori[WhoIsChiamante(giocatori)]->getNome() << " ha chiamato:\t";
+	cartaChiamata.stampaCarta();
+
+	for (int i = 0; i < 5; i++) {
+		if (giocatori[i]->getMano().CartaInLista(cartaChiamata)) {
+			giocatori[i]->setCompagno(true);
+		}
+	}
+
+	Carta* cartaATerra = terra.CercaInLista(cartaChiamata);
+
+	if (cartaATerra != nullptr) {
+		for (int i = 0; i < 5; i++) 
+			if (strcmp(giocatori[i]->getNome(), cartaATerra->getProprietario()) == 0)
+				giocatori[i]->setCompagno(true);
+	}
+
+	for (int i = 0; i < 5; i++)
+		if (giocatori[i]->compagno())
+			cout << endl << endl << giocatori[i]->getNome() << " e' il compagno." << endl;
+
+	return briscola;
+}
+
+Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare) {
+	Carte terra;
+	Segno briscola;
 	int count = 0;
 
 	for (int i = primoAGiocare; count < 5; i++) {
@@ -294,5 +388,7 @@ void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra,
 		count++;
 	}
 
-	terra.Stampa(true);
+	briscola = ChiamaCarta(giocatori, terra);
+
+	return briscola;
 }
