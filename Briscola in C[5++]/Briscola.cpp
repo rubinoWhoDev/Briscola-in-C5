@@ -265,8 +265,29 @@ int ScegliCarta(Giocatore* giocatore) {
 
 void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra, bool giroMorto = false, int punteggioMinimo = 0) {
 	int scelta;
-	do {
+	if (giroMorto) {
+		do {
+			cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo << endl << endl;
+			if (terra.getSize() > 0) {
+				cout << "Carte a terra: " << endl;;
+				terra.Stampa(true);
+				cout << endl << endl;
+			}
 
+
+			giocatori[i]->stampaNome();
+			cout << endl;
+			giocatori[i]->stampaMano();
+			cout << endl << endl;
+			scelta = ScegliCarta(giocatori[i]);
+			if (giocatori[i]->getMano().getCarta(scelta).getPunti() + terra.totPunti() > (120) - punteggioMinimo) {
+				system("cls");
+				cout << "Non puoi giocare questa carta perche' il chiamante non puo' perdere nel giro morto." << endl << endl;
+			}
+		} while (giocatori[i]->getMano().getCarta(scelta).getPunti() + terra.totPunti() > (120) - punteggioMinimo);
+	}
+
+	else {
 		cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo << endl << endl;
 		if (terra.getSize() > 0) {
 			cout << "Carte a terra: " << endl;;
@@ -280,10 +301,8 @@ void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra,
 		giocatori[i]->stampaMano();
 		cout << endl << endl;
 		scelta = ScegliCarta(giocatori[i]);
-		if (giocatori[i]->getMano().getCarta(scelta).getPunti() + terra.totPunti() > (120) - punteggioMinimo)
-			cout << "Non puoi giocare questa carta perche' il chiamante non puo' perdere nel giro morto." << endl << endl;
 		cout << endl << endl;
-	} while (giocatori[i]->getMano().getCarta(scelta).getPunti() + terra.totPunti() > (120) - punteggioMinimo);
+	}
 
 	terra.AggiungiInCoda(giocatori[i]->getMano().PrendiCarta(scelta));
 }
@@ -319,13 +338,13 @@ const char* valoreToString(int valore) {
 }
 
 Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra) {
-	int sceltaSegno, sceltaCarta;
+	int sceltaSegno, sceltaCarta, indiceChiamante = WhoIsChiamante(giocatori);
 
 	cout << "Carte a terra: " << endl << endl;
 	terra.Stampa(true);
 
-	cout << endl << giocatori[WhoIsChiamante(giocatori)]->getNome() << " la tua mano:" << endl << endl;
-	giocatori[WhoIsChiamante(giocatori)]->stampaMano();
+	cout << endl << giocatori[indiceChiamante]->getNome() << " la tua mano:" << endl << endl;
+	giocatori[indiceChiamante]->stampaMano();
 
 	cout << endl << endl <<"Scegli il segno della briscola:" << endl << endl;
 
@@ -339,7 +358,12 @@ Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra) {
 
 	Segno briscola = (Segno)(sceltaSegno-1);
 
-	cout << endl << giocatori[WhoIsChiamante(giocatori)]->getNome() << " scegli la carta da chiamare:" << endl << endl;
+	system("cls");
+	cout << "Carte a terra: " << endl << endl;
+	terra.Stampa(true);
+	cout << endl << giocatori[indiceChiamante]->getNome() << " la tua mano:" << endl << endl;
+	giocatori[indiceChiamante]->stampaMano();
+	cout << endl << giocatori[indiceChiamante]->getNome() << " scegli la carta da chiamare:" << endl << endl;
 
 	for (int i = 1; i <= 10; i++) 
 		cout << i << ".\t" << valoreToString(i) << " di " << segnoToString(briscola) << endl;
@@ -352,7 +376,7 @@ Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra) {
 
 	Carta cartaChiamata(briscola, sceltaCarta);
 
-	cout << endl << giocatori[WhoIsChiamante(giocatori)]->getNome() << " ha chiamato:\t";
+	cout << endl << giocatori[indiceChiamante]->getNome() << " ha chiamato:\t";
 	cartaChiamata.stampaCarta();
 
 	for (int i = 0; i < 5; i++) {
