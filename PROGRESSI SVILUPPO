@@ -11,8 +11,8 @@ Inizializzazione dell'array di "Giocatore" e controllo dei nomi diversi   IMPLEM
 Ordinamento decrescente della lista "Mano" per segno                      IMPLEMENTATO (rubinoWhoDev)
 Asta per decidere il chiamante                                            IMPLEMENTATO (rubinoWhoDev)
 Giro Morto e funzione giocaCarta()                                        IMPLEMENTATO (rubinoWhoDev)
-Sistema di chiamata e sistema di assegnazione punti                       da implementare
-Giro Default e loop di gioco                                              da implementare
+Sistema di chiamata e sistema di assegnazione punti                       IMPLEMENTATO (rubinoWhoDev)
+Giro Default e loop di gioco                                              IMPLEMENTATO (rubinoWhoDev)
 Sistema per stabilire la squadra vincitrice                               da implementare
 
 
@@ -28,4 +28,4 @@ Intelligenza Artificiale del computer (modalità di gioco con bot)         imple
 Sistema Server per gioco online                                           seh vabbe (implementazione ad acquisizione competenze)
 Rendering con librerie grafiche                                           buonanotte (implementazione ad acquisizione competenze)
 
-***************** CHIUNQUE VOGLIA COLLABORARE ALLA REALIZZAZIONE DEL PROGETTO E' IL BENVENUTO ********************************** 
+****************************** CHIUNQUE VOGLIA COLLABORARE ALLA REALIZZAZIONE DEL PROGETTO E' IL BENVENUTO ********************************** 
