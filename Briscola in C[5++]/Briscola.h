@@ -23,6 +23,8 @@ public:
 	bool chiamante() { return isChiamante; }
 	void setChiamante(bool b) { isChiamante = b; }
 	void setCompagno(bool b) { isCompagno = b; }
+	void prendiPunti(unsigned int punti) { punteggio += punti; }
+	unsigned getPunteggio() { return punteggio; }
 	bool compagno() { return isCompagno; }
 };
 
@@ -33,4 +35,5 @@ void StampaManoGiocatori(Giocatore**& giocatori);
 int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo);
 int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare);
 int WhoIsChiamante(Giocatore**& giocatori);
-Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare);
+Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare, Carta& chiamata);
+void GiroStardard(Giocatore**& giocatori, int& primoAGiocare, Segno briscola, int punteggioMinimo, Carta& chiamata);

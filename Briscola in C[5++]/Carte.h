@@ -28,6 +28,7 @@ public:
 	unsigned int getValore() { return this->valore; }
 	unsigned int getPunti() { return this->punti; }
 	bool operator ==(Carta& c);
+	//void operator =(Carta& c);
 };
 
 struct nodoCarte {

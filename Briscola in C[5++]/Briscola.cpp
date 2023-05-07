@@ -263,7 +263,7 @@ int ScegliCarta(Giocatore* giocatore) {
 	return scelta;
 }
 
-void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra, bool giroMorto = false, int punteggioMinimo = 0) {
+void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra, int punteggioMinimo, bool giroMorto = false) {
 	int scelta;
 	if (giroMorto) {
 		do {
@@ -337,7 +337,7 @@ const char* valoreToString(int valore) {
 	}
 }
 
-Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra) {
+Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra, Carta& chiamata) {
 	int sceltaSegno, sceltaCarta, indiceChiamante = WhoIsChiamante(giocatori);
 
 	cout << "Carte a terra: " << endl << endl;
@@ -375,6 +375,7 @@ Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra) {
 	} while (sceltaCarta > 10 || sceltaCarta < 1);
 
 	Carta cartaChiamata(briscola, sceltaCarta);
+	chiamata = cartaChiamata;
 
 	cout << endl << giocatori[indiceChiamante]->getNome() << " ha chiamato:\t";
 	cartaChiamata.stampaCarta();
@@ -400,19 +401,80 @@ Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra) {
 	return briscola;
 }
 
-Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare) {
+int AssegnaPunti(Giocatore**& giocatori, Carte& terra, Segno briscola) {
+	Carta* max = &terra.getPrimo()->carta;
+	
+	for (nodoCarte* aux = terra.getPrimo(); aux != nullptr; aux = aux->next) {
+		if (aux->carta.getSegno() == briscola) {
+			if (max->getSegno() != briscola)
+				max = &aux->carta;
+			else {
+				if (aux->carta.getPunti() == 0 && max->getPunti() == 0) {
+					if (aux->carta.getValore() > max->getValore())
+						max = &aux->carta;
+				}
+				else
+					if (aux->carta.getPunti() > max->getPunti())
+						max = &aux->carta;
+			}
+		}
+
+		if (aux->carta.getSegno() == max->getSegno()) {
+			if (aux->carta.getPunti() == 0 && max->getPunti() == 0) {
+				if (aux->carta.getValore() > max->getValore())
+					max = &aux->carta;
+			}
+			else
+				if (aux->carta.getPunti() > max->getPunti())
+					max = &aux->carta;
+		}
+	}
+
+	for (int i = 0; i < 5; i++) {
+		if (strcmp(giocatori[i]->getNome(), max->getProprietario()) == 0) {
+			giocatori[i]->prendiPunti(terra.totPunti());
+			return i;
+		}
+	}
+}
+
+Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare, Carta& chiamata) {
 	Carte terra;
 	Segno briscola;
 	int count = 0;
 
 	for (int i = primoAGiocare; count < 5; i++) {
 		if (i == 5) i = 0;
-		GiocaCarta(giocatori, i, primoAGiocare, terra, true, punteggioMinimo);
+		GiocaCarta(giocatori, i, primoAGiocare, terra, punteggioMinimo, true);
 		system("cls");
 		count++;
 	}
 
-	briscola = ChiamaCarta(giocatori, terra);
-
+	briscola = ChiamaCarta(giocatori, terra, chiamata);
+	primoAGiocare = AssegnaPunti(giocatori, terra, briscola);
+	cout << giocatori[primoAGiocare]->getNome() << " ha preso " << terra.totPunti() << " punti." << endl << endl;
+	system("pause");
+	system("cls");
+	terra.~Carte();
 	return briscola;
+}
+
+void GiroStardard(Giocatore**& giocatori, int& primoAGiocare, Segno briscola, int punteggioMinimo, Carta& chiamata) {
+	Carte terra;
+	int count = 0;
+
+	for (int i = primoAGiocare; count < 5; i++) {
+		if (i == 5) i = 0;
+		cout << giocatori[i]->getNome() << " hai in totale " << giocatori[i]->getPunteggio() << " punti." << endl << endl;
+		cout << "La carta chiamata e': " << chiamata.valoreToString() << " di " << chiamata.segnoToString() << endl << endl;
+		GiocaCarta(giocatori, i, primoAGiocare, terra, punteggioMinimo);
+		system("cls");
+		count++;
+	}
+
+	primoAGiocare = AssegnaPunti(giocatori, terra, briscola);
+	cout << giocatori[primoAGiocare]->getNome() << " ha preso " << terra.totPunti() << " punti." << endl << endl;
+	system("pause");
+	system("cls");
+	terra.~Carte();
 }

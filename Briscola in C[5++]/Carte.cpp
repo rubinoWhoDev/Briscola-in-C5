@@ -150,6 +150,13 @@ Carta& Carte::PrendiCarta(Carta& carta) {
 bool Carta::operator==(Carta& c) {
 	return (this->segno == c.segno && this->valore == c.valore);
 }
+/*
+void Carta::operator=(Carta& c) {
+	this->punti = c.punti;
+	this->segno = c.segno;
+	this->valore = c.valore;
+}
+*/
 
 void Carte::CancellaCarta(nodoCarte** coda, Carta& carta) {
 	nodoCarte* aux = *coda,*aux2 = nullptr;
