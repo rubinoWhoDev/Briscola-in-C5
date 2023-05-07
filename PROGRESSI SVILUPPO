@@ -13,6 +13,7 @@ Asta per decidere il chiamante                                            IMPLEM
 Giro Morto e funzione giocaCarta()                                        IMPLEMENTATO (rubinoWhoDev)
 Sistema di chiamata e sistema di assegnazione punti                       IMPLEMENTATO (rubinoWhoDev)
 Giro Default e loop di gioco                                              IMPLEMENTATO (rubinoWhoDev)
+Indicatore nella UI del giro in corso                                     da implementare
 Sistema per stabilire la squadra vincitrice                               da implementare
 
 
