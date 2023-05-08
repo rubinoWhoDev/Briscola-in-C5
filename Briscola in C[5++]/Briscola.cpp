@@ -269,9 +269,9 @@ void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra,
 		do {
 			cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo << endl << endl;
 			if (terra.getSize() > 0) {
-				cout << "Carte a terra: " << endl;;
+				cout << endl << "Carte a terra: " << endl << endl;;
 				terra.Stampa(true);
-				cout << endl << endl;
+				cout << endl << endl << endl;
 			}
 
 
@@ -394,10 +394,6 @@ Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra, Carta& chiamata) {
 				giocatori[i]->setCompagno(true);
 	}
 
-	for (int i = 0; i < 5; i++)
-		if (giocatori[i]->compagno())
-			cout << endl << endl << giocatori[i]->getNome() << " e' il compagno." << endl;
-
 	return briscola;
 }
 
@@ -447,6 +443,11 @@ Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare,
 		if (i == 5) i = 0;
 		GiocaCarta(giocatori, i, primoAGiocare, terra, punteggioMinimo, true);
 		system("cls");
+		cout << "Carte a terra:" << endl << endl;
+		terra.Stampa(true);
+		cout << endl << "Tocca a " << ((i + 1 == 5) ? giocatori[0]->getNome() : giocatori[i + 1]->getNome()) << endl << endl;
+		system("pause");
+		system("cls");
 		count++;
 	}
 
@@ -469,12 +470,43 @@ void GiroStardard(Giocatore**& giocatori, int& primoAGiocare, Segno briscola, in
 		cout << "La carta chiamata e': " << chiamata.valoreToString() << " di " << chiamata.segnoToString() << endl << endl;
 		GiocaCarta(giocatori, i, primoAGiocare, terra, punteggioMinimo);
 		system("cls");
+		cout << "Carte a terra:" << endl << endl;
+		terra.Stampa(true);
+		cout << endl << "Tocca a " << ((i + 1 == 5) ? giocatori[0]->getNome() : giocatori[i + 1]->getNome()) << endl << endl;
+		system("pause");
+		system("cls");
 		count++;
 	}
 
 	primoAGiocare = AssegnaPunti(giocatori, terra, briscola);
-	cout << giocatori[primoAGiocare]->getNome() << " ha preso " << terra.totPunti() << " punti." << endl << endl;
+	cout << "Carte a terra:" << endl << endl;
+	terra.Stampa(true);
+	cout << endl << endl << giocatori[primoAGiocare]->getNome() << " ha preso " << terra.totPunti() << " punti." << endl << endl;
 	system("pause");
 	system("cls");
 	terra.~Carte();
+}
+
+void StampaVincitori(Giocatore**& giocatori, int punteggioMinimo) {
+	int punteggioChiamante = 0, punteggioGiocatori;
+	
+	cout << "PUNTI FINALI:" << endl << endl;
+
+	for (int i = 0; i < 5; i++) {
+		if (giocatori[i]->chiamante() || giocatori[i]->compagno()) {
+			punteggioChiamante += giocatori[i]->getPunteggio();
+		}
+
+		cout << "Punteggio di " << giocatori[i]->getNome() << ": " << giocatori[i]->getPunteggio();
+		if (giocatori[i]->chiamante()) cout << "\t (chiamante)";
+		if (giocatori[i]->compagno()) cout << "\t (compagno)";
+		cout << endl;
+	}
+
+	punteggioGiocatori = 120 - punteggioChiamante;
+	
+	cout << endl << "Punteggio della squadra chiamante: " << punteggioChiamante;
+	cout << endl << "Punteggio della squadra giocatori: " << punteggioGiocatori;
+
+	cout << endl << endl << ((punteggioChiamante >= punteggioMinimo) ? "La squadra chiamante ha vinto!" : "La squadra giocatori ha vinto!") << endl;
 }

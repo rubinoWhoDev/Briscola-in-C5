@@ -37,3 +37,4 @@ int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare);
 int WhoIsChiamante(Giocatore**& giocatori);
 Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare, Carta& chiamata);
 void GiroStardard(Giocatore**& giocatori, int& primoAGiocare, Segno briscola, int punteggioMinimo, Carta& chiamata);
+void StampaVincitori(Giocatore**& giocatori, int punteggioMinimo);

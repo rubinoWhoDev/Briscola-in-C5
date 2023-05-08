@@ -8,15 +8,22 @@ int main() {
 	Giocatore** giocatori = nullptr;
 	Segno briscola;
 	Carta cartaChiamata{ 0,0 };
-	int punteggioMinimo = 74;
-	int primoAGiocare = Random(0, 4);
+	char scelta;
 
-	punteggioMinimo = InizioGioco(giocatori, punteggioMinimo, primoAGiocare);
-	briscola = GiroMorto(giocatori, punteggioMinimo, primoAGiocare, cartaChiamata);
-	for (int i = 0; i < 7; i++)
-		GiroStardard(giocatori, primoAGiocare, briscola, punteggioMinimo, cartaChiamata);
+	do {
+		system("cls");
+		int punteggioMinimo = 74;
+		int primoAGiocare = Random(0, 4);
+		punteggioMinimo = InizioGioco(giocatori, punteggioMinimo, primoAGiocare);
+		briscola = GiroMorto(giocatori, punteggioMinimo, primoAGiocare, cartaChiamata);
+		for (int i = 0; i < 7; i++)
+			GiroStardard(giocatori, primoAGiocare, briscola, punteggioMinimo, cartaChiamata);
+		StampaVincitori(giocatori, punteggioMinimo);
+		cout << endl << "Giocare ancora? (n per uscire) " << flush;
+		cin >> scelta;
+		delete[] giocatori;
+	} while (scelta != 'n' && scelta != 'N');
 
-	delete[] giocatori;
 	
 	return 0;
 }
