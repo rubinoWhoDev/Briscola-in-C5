@@ -453,7 +453,7 @@ Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare,
 
 	briscola = ChiamaCarta(giocatori, terra, chiamata);
 	primoAGiocare = AssegnaPunti(giocatori, terra, briscola);
-	cout << giocatori[primoAGiocare]->getNome() << " ha preso " << terra.totPunti() << " punti." << endl << endl;
+	cout << endl << giocatori[primoAGiocare]->getNome() << " ha preso " << terra.totPunti() << " punti." << endl << endl;
 	system("pause");
 	system("cls");
 	terra.~Carte();
