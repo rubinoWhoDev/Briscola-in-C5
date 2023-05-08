@@ -1,5 +1,5 @@
 Progetto di: rubinoWhoDev
-Data: 7/05/2023
+Data: 9/05/2023
 
 BRISCOLA IN C[5++]
 
@@ -13,11 +13,12 @@ Asta per decidere il chiamante                                            IMPLEM
 Giro Morto e funzione giocaCarta()                                        IMPLEMENTATO (rubinoWhoDev)
 Sistema di chiamata e sistema di assegnazione punti                       IMPLEMENTATO (rubinoWhoDev)
 Giro Default e loop di gioco                                              IMPLEMENTATO (rubinoWhoDev)
+Sistema per stabilire la squadra vincitrice                               IMPLEMENTATO (rubinoWhoDev)
+
+*IL PROGRAMMA ALLO STATO ATTUALE È FUNZIONALE*
+
 Indicatore nella UI del giro in corso                                     da implementare
-Sistema per stabilire la squadra vincitrice                               da implementare
-
-
-*A QUESTO PUNTO IL PROGRAMMA SARA' FUNZIONALE*
+Modifiche grafiche e perfezionamento della UI del terminale               da implementare
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
