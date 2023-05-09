@@ -8,5 +8,6 @@ ma mi rendo benissimo conto che non è assolutamente un'alternativa valida alla 
 Ho intenzione di continuare a migliorare il programma mano mano che acquisisco competenze, come l'implementazione di una grafica
 vera e propria o addirittura un sistema per il gioco multiplayer online, *ma non è ancora il momento*.
 
+A breve caricherò un eseguibile per Windows e appena c'ho sbatti scarico una macchina virtuale e carico un eseguibile Linux.
 
 *Chiunque voglia mettere mano sul codice è libero di farlo, in quanto sono sicuro al 100% che ci sia qualcuno in grado di rendere più efficente il codice di quanto abbia provato io, per altre informazioni su quello che è lo stato attuale del codice leggere il file PROGRESSI SVILUPPO.*
