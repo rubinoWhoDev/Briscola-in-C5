@@ -1,6 +1,8 @@
 # Briscola in C[5++]
 Briscola in 5 nel terminale
 
+Modalità giocabili: Giro Morto
+
 Per tutti coloro che vogliono giocare Briscola in 5 da terminale con i propri amici.
 Il programma non ha bot *(per ora)* e richiede 5 amici o tanta tristezza per essere giocato.
 Ho iniziato a realizzare questo progetto per gioco e per provare a creare qualcosa di più "serio" rispetto ai miei soliti programmi,
