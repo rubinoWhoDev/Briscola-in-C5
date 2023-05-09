@@ -177,10 +177,17 @@ int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare
 		if (input < punteggioMinimo) {
 			giocatori[i]->setChiamante(false);
 			system("cls");
+			cout << giocatori[i]->getNome() << " ha lasciato." << endl << endl;
+			system("pause");
+			system("cls");
 			continue;
 		}
 
 		punteggioMinimo = input;
+		system("cls");
+		cout << giocatori[i]->getNome() << " ha chiamato " << punteggioMinimo << endl << endl;
+		system("pause");
+		system("cls");
 
 		if (punteggioMinimo == 118) {
 			for (int j = 0; j < 5; j++) {
@@ -192,15 +199,17 @@ int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare
 	}
 
 	if (punteggioMinimo == 74) {
+		int index = primoAGiocare - 1;
+		if (index == -1) index = 4;
 		int input;
-		UIGiro(giocatori, primoAGiocare, 4);
-		std::cout << "La mano di " << giocatori[4]->getNome() << ":" << std::endl << std::endl;
-		giocatori[4]->stampaMano();
+		UIGiro(giocatori, primoAGiocare, index);
+		std::cout << "La mano di " << giocatori[index]->getNome() << ":" << std::endl << std::endl;
+		giocatori[index]->stampaMano();
 		std::cout << std::endl;
 		std::cout << "Chiami? (Si parte da " << punteggioMinimo + 1 << ", inserisci un numero piu' basso per lasciare) (MAX 118) ";
 		std::cin >> input;
 		if (input < punteggioMinimo) {
-			giocatori[4]->setChiamante(false);
+			giocatori[index]->setChiamante(false);
 			system("cls");
 			return punteggioMinimo;
 		}
@@ -224,7 +233,8 @@ bool nessunChiamante(Giocatore**& giocatori) {
 int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare) {
 	inizializzaGiocatori(giocatori);
 
-	cout << endl << giocatori[(primoAGiocare - 1 < 0) ? 4 : primoAGiocare - 1]->getNome() << " mischia il mazzo..." << endl;
+	cout << endl << giocatori[(primoAGiocare - 1 < 0) ? 4 : primoAGiocare - 1]->getNome() << " mischia il mazzo..." << endl << endl;
+	cout << "Tocca a " << giocatori[primoAGiocare]->getNome() << endl << endl;
 	system("pause");
 
 	while (punteggioMinimo == 74) {
@@ -239,7 +249,6 @@ int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare)
 			giocatori[i]->stampaNome();
 			giocatori[i]->stampaMano();
 			*/
-			std::cout << std::endl;
 		}
 
 		if (TuttiLisci(giocatori)) {
@@ -251,7 +260,8 @@ int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare)
 		{
 			if (nessunChiamante(giocatori)) {
 				primoAGiocare = Random(0, 4);
-				cout << giocatori[(primoAGiocare - 1 < 0) ? 4 : primoAGiocare - 1]->getNome() << " mischia il mazzo..." << endl;
+				cout << giocatori[(primoAGiocare - 1 < 0) ? 4 : primoAGiocare - 1]->getNome() << " mischia il mazzo..." << endl << endl;
+				cout << "Tocca a " << giocatori[primoAGiocare]->getNome() << endl << endl;
 				system("pause");
 			}
 		}
@@ -396,9 +406,6 @@ Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra, Carta& chiamata) {
 	Carta cartaChiamata(briscola, sceltaCarta);
 	chiamata = cartaChiamata;
 
-	cout << endl << giocatori[indiceChiamante]->getNome() << " ha chiamato:\t";
-	cartaChiamata.stampaCarta();
-
 	for (int i = 0; i < 5; i++) {
 		if (giocatori[i]->getMano().CartaInLista(cartaChiamata)) {
 			giocatori[i]->setCompagno(true);
@@ -472,7 +479,13 @@ Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare,
 
 	briscola = ChiamaCarta(giocatori, terra, chiamata);
 	primoAGiocare = AssegnaPunti(giocatori, terra, briscola);
+	system("cls");
+	cout << "Carte a terra:" << endl << endl;
+	terra.Stampa(true);
+	cout << endl << giocatori[WhoIsChiamante(giocatori)]->getNome() << " ha chiamato:\t";
+	chiamata.stampaCarta();
 	cout << endl << giocatori[primoAGiocare]->getNome() << " ha preso " << terra.totPunti() << " punti." << endl << endl;
+	cout << "Tocca a " << giocatori[primoAGiocare]->getNome() << endl << endl;
 	system("pause");
 	system("cls");
 	terra.~Carte();
