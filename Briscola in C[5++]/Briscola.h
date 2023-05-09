@@ -18,6 +18,7 @@ public:
 	void stampaMano();
 	Carte& getMano();
 	void OrdinaCarte();
+	void CancellaCarte() { mano.~Carte(); }
 	const char* getNome() { return nome; }
 	//void setMano(Carte nuovaMano) { mano = nuovaMano; }
 	bool chiamante() { return isChiamante; }
@@ -32,8 +33,8 @@ void inizializzaGiocatori(Giocatore**& giocatori);
 int Random(int min, int max);
 bool TuttiLisci(Giocatore**& giocatori);
 void StampaManoGiocatori(Giocatore**& giocatori);
-int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo);
-int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare);
+int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare);
+int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare);
 int WhoIsChiamante(Giocatore**& giocatori);
 Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare, Carta& chiamata);
 void GiroStardard(Giocatore**& giocatori, int& primoAGiocare, Segno briscola, int punteggioMinimo, Carta& chiamata);

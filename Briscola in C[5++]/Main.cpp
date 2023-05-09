@@ -21,6 +21,8 @@ int main() {
 		StampaVincitori(giocatori, punteggioMinimo);
 		cout << endl << "Giocare ancora? (n per uscire) " << flush;
 		cin >> scelta;
+		for (int i = 0; i < 5; i++)
+			giocatori[i]->CancellaCarte();
 		delete[] giocatori;
 	} while (scelta != 'n' && scelta != 'N');
 

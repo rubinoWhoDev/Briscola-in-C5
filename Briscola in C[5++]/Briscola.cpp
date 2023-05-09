@@ -144,11 +144,27 @@ bool moreChiamanti(Giocatore**& giocatori) {
 	return (counter > 1);
 }
 
-int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo) {
-	for (int i = 0; moreChiamanti(giocatori); i++) {
+void UIGiro(Giocatore**& giocatori, int primoAGiocare, int indice) {
+	int count = 0;
+	cout << endl << endl << "Giro:" << endl;
+	for (int i = primoAGiocare; count < 5; i++) {
+		if (i == 5) i = 0;
+		if (i == indice)
+			cout << "   ->  " << giocatori[i]->getNome();
+
+		else
+			cout << "       " << giocatori[i]->getNome();
+		count++;
+	}
+	cout << endl << endl;
+}
+
+int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare) {
+	for (int i = primoAGiocare; moreChiamanti(giocatori); i++) {
 		if (i == 5) i = 0;
 		if (!giocatori[i]->chiamante()) continue;
 		system("cls");
+		UIGiro(giocatori, primoAGiocare, i);
 		int input;
 		std::cout << "La mano di " << giocatori[i]->getNome() << ":" << std::endl << std::endl;
 		giocatori[i]->stampaMano();
@@ -177,6 +193,7 @@ int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo) {
 
 	if (punteggioMinimo == 74) {
 		int input;
+		UIGiro(giocatori, primoAGiocare, 4);
 		std::cout << "La mano di " << giocatori[4]->getNome() << ":" << std::endl << std::endl;
 		giocatori[4]->stampaMano();
 		std::cout << std::endl;
@@ -204,7 +221,7 @@ bool nessunChiamante(Giocatore**& giocatori) {
 	return noChiamante;
 }
 
-int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare) {
+int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare) {
 	inizializzaGiocatori(giocatori);
 
 	cout << endl << giocatori[(primoAGiocare - 1 < 0) ? 4 : primoAGiocare - 1]->getNome() << " mischia il mazzo..." << endl;
@@ -214,6 +231,7 @@ int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare) 
 		Carte mazzo(40);
 
 		for (int i = 0; i < 5; i++) {
+			giocatori[i]->CancellaCarte();
 			giocatori[i]->Pesca(mazzo, 8);
 			giocatori[i]->OrdinaCarte();
 			giocatori[i]->setChiamante(true);
@@ -225,15 +243,14 @@ int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare) 
 		}
 
 		if (TuttiLisci(giocatori)) {
-			std::cout << "Un giocatore ha in mano tutti lisci." << std::endl;
+			std::cout << endl << "Un giocatore ha in mano tutti lisci." << std::endl;
 			StampaManoGiocatori(giocatori);
 			continue;
 		}
-		punteggioMinimo = GiroChiamanti(giocatori, punteggioMinimo);
+		punteggioMinimo = GiroChiamanti(giocatori, punteggioMinimo, primoAGiocare);
 		{
 			if (nessunChiamante(giocatori)) {
-				for (int i = 0; i < 5; i++)
-					giocatori[i]->getMano().~Carte();
+				primoAGiocare = Random(0, 4);
 				cout << giocatori[(primoAGiocare - 1 < 0) ? 4 : primoAGiocare - 1]->getNome() << " mischia il mazzo..." << endl;
 				system("pause");
 			}
@@ -267,7 +284,8 @@ void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra,
 	int scelta;
 	if (giroMorto) {
 		do {
-			cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo << endl << endl;
+			cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo;
+			UIGiro(giocatori, primoAGiocare, i);
 			if (terra.getSize() > 0) {
 				cout << endl << "Carte a terra: " << endl << endl;;
 				terra.Stampa(true);
@@ -288,7 +306,8 @@ void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra,
 	}
 
 	else {
-		cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo << endl << endl;
+		cout << giocatori[WhoIsChiamante(giocatori)]->getNome() << " e' il chiamante e ha chiamato " << punteggioMinimo;
+		UIGiro(giocatori, primoAGiocare, i);
 		if (terra.getSize() > 0) {
 			cout << "Carte a terra: " << endl;;
 			terra.Stampa(true);
