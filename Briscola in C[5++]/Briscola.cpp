@@ -26,7 +26,7 @@ Giocatore::Giocatore(int n) : mano() {
 }
 
 void Giocatore::Pesca(Carte& mazzo, int num_carte) {
-	srand(time(NULL));
+	//srand(time(NULL));
 
 	for (int i = 0; i < num_carte; i++) {
 		int random = Random(0, mazzo.getSize() - 1);
