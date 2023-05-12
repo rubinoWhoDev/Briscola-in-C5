@@ -1,5 +1,7 @@
 #pragma once
 //#include "Briscola.h"
+#include <string>
+
 
 enum Segno {
 	ORO,
@@ -14,15 +16,15 @@ private:
 	unsigned int valore;
 	unsigned int punti;
 	//Giocatore* proprietario;
-	char proprietario[30];
+	std::string proprietario;
 public:
 	Carta(int segno, unsigned int val);
 	Carta(Carta& c);
 	void stampaCarta();
-	const char* valoreToString();
-	const char* segnoToString();
-	void setProprietario(const char nome_proprietario[30]);
-	char* getProprietario() { return proprietario; }
+	std::string valoreToString();
+	std::string segnoToString();
+	void setProprietario(std::string nome_proprietario);
+	std::string getProprietario() { return proprietario; }
 	void stampaProprietario();
 	Segno getSegno() { return this->segno; }
 	unsigned int getValore() { return this->valore; }

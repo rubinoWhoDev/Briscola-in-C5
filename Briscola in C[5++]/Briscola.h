@@ -3,7 +3,7 @@
 
 class Giocatore {
 private:
-	char nome[30];
+	std::string nome;
 	Carte mano;
 	unsigned punteggio;
 	bool isChiamante;
@@ -19,7 +19,7 @@ public:
 	Carte& getMano();
 	void OrdinaCarte();
 	void CancellaCarte() { mano.~Carte(); }
-	const char* getNome() { return nome; }
+	std::string getNome() { return nome; }
 	//void setMano(Carte nuovaMano) { mano = nuovaMano; }
 	bool chiamante() { return isChiamante; }
 	void setChiamante(bool b) { isChiamante = b; }

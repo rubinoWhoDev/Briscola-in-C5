@@ -1,11 +1,12 @@
 //#define _CRT_SECURE_NO_WARNINGS
 #include "Carte.h"
 #include <iostream>
+#include <sstream>
 #include <string>
 
 Carta::Carta(int segno, unsigned int val) : valore(val) {
 	this->segno = (Segno)segno;
-	strcpy_s(this->proprietario, "");
+	this->proprietario = "";
 
 	switch (val) {
 	case 10:
@@ -30,10 +31,10 @@ Carta::Carta(int segno, unsigned int val) : valore(val) {
 }
 
 Carta::Carta(Carta& c) : segno(c.segno), valore(c.valore), punti(c.punti) {
-	strcpy_s(this->proprietario, c.proprietario);
+	this->proprietario = c.proprietario;
 }
 
-const char* Carta::valoreToString() {
+std::string Carta::valoreToString() {
 	switch (this->valore) {
 	case 10:
 		return "Re";
@@ -44,13 +45,14 @@ const char* Carta::valoreToString() {
 	case 1:
 		return "Asso";
 	default:
-		char* num = new char[2];
-		sprintf_s(num, 2 , "%d\0", this->valore);
-		return num;
+		std::ostringstream num;
+		num << this->valore;
+		//sprintf_s(num, 2 , "%d\0", this->valore);
+		return num.str();
 	}
 }
 
-const char* Carta::segnoToString() {
+std::string Carta::segnoToString() {
 	switch (this->segno) {
 	case ORO:
 		return "oro";
@@ -84,8 +86,9 @@ void Carte::AggiungiInCoda(Carta& carta) {
 	coda.ultimo = aux;
 }
 
-void Carta::setProprietario(const char nome_proprietario[30]) {
-	strcpy_s(this->proprietario, nome_proprietario);
+void Carta::setProprietario(std::string nome_proprietario) {
+	//strcpy_s(this->proprietario, nome_proprietario);
+	this->proprietario = nome_proprietario;
 }
 
 void Carta::stampaProprietario() {

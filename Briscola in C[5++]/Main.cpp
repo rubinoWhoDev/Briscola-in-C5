@@ -10,6 +10,8 @@ int main() {
 	Carta cartaChiamata{ 0,0 };
 	char scelta;
 
+	inizializzaGiocatori(giocatori);
+
 	do {
 		system("cls");
 		int punteggioMinimo = 74;
@@ -19,13 +21,13 @@ int main() {
 		for (int i = 0; i < 7; i++)
 			GiroStardard(giocatori, primoAGiocare, briscola, punteggioMinimo, cartaChiamata);
 		StampaVincitori(giocatori, punteggioMinimo);
-		cout << endl << "Giocare ancora? (n per uscire) " << flush;
+		cout << endl << "Giocare ancora? (0 per uscire) " << flush;
 		cin >> scelta;
 		for (int i = 0; i < 5; i++)
 			giocatori[i]->CancellaCarte();
-		delete[] giocatori;
-	} while (scelta != 'n' && scelta != 'N');
+	} while (scelta != 0);
 
-	
+	delete[] giocatori;
+
 	return 0;
 }

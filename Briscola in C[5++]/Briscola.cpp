@@ -1,5 +1,6 @@
 #include "Briscola.h"
 #include <iostream>
+#include <sstream>
 #include <random>
 
 using namespace std;
@@ -14,7 +15,7 @@ int Random(int min, int max) {
 
 void Giocatore::setName(int n) {
 	std::cout << "Giocatore " << n << " come ti chiami: ";
-	std::cin.getline(nome, 30);
+	std::getline(std::cin, nome);
 }
 
 Giocatore::Giocatore(int n) : mano() {
@@ -50,7 +51,6 @@ void Giocatore::stampaMano() {
 
 Giocatore::~Giocatore() {
 	mano.~Carte();
-	delete[] nome;
 }
 
 void Scambia(nodoCarte** primo, nodoCarte** secondo) {
@@ -93,9 +93,9 @@ void Giocatore::OrdinaCarte() {
 	mano.setCoda(nodo);
 }
 
-bool nomeDoppione(const char* nome, Giocatore**& giocatori, int j) {
+bool nomeDoppione(std::string nome, Giocatore**& giocatori, int j) {
 	for (int i = 0; i < j; i++) {
-		if (strcmp(giocatori[i]->getNome(), nome) == 0)
+		if (giocatori[i]->getNome() == nome)
 			return true;
 	}
 
@@ -107,7 +107,7 @@ void inizializzaGiocatori(Giocatore**& giocatori) {
 	for (int i = 0; i < 5; i++) {
 		giocatori[i] = new Giocatore(i + 1);
 		while(nomeDoppione(giocatori[i]->getNome(), giocatori, i)) {
-			char nuovoNome[30];
+			std::string nuovoNome;
 			std::cout << "Un altro giocatore ha gia' questo nome, inserirne uno diverso." << std::endl;
 			giocatori[i]->setName(i+1);
 		}
@@ -231,7 +231,6 @@ bool nessunChiamante(Giocatore**& giocatori) {
 }
 
 int InizioGioco(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare) {
-	inizializzaGiocatori(giocatori);
 
 	cout << endl << giocatori[(primoAGiocare - 1 < 0) ? 4 : primoAGiocare - 1]->getNome() << " mischia il mazzo..." << endl << endl;
 	cout << "Tocca a " << giocatori[primoAGiocare]->getNome() << endl << endl;
@@ -336,7 +335,7 @@ void GiocaCarta(Giocatore**& giocatori, int i, int& primoAGiocare, Carte& terra,
 	terra.AggiungiInCoda(giocatori[i]->getMano().PrendiCarta(scelta));
 }
 
-const char* segnoToString(Segno segno) {
+std::string segnoToString(Segno segno) {
 	switch (segno) {
 	case ORO:
 		return "oro";
@@ -349,7 +348,7 @@ const char* segnoToString(Segno segno) {
 	}
 }
 
-const char* valoreToString(int valore) {
+std::string valoreToString(int valore) {
 	switch (valore) {
 	case 10:
 		return "Re";
@@ -360,9 +359,10 @@ const char* valoreToString(int valore) {
 	case 1:
 		return "Asso";
 	default:
-		char* num = new char[2];
-		sprintf_s(num, 2, "%d\0", valore);
-		return num;
+		std::ostringstream num;
+		num << valore;
+		//sprintf_s(num, 2 , "%d\0", this->valore);
+		return num.str();
 	}
 }
 
@@ -416,7 +416,7 @@ Segno ChiamaCarta(Giocatore**& giocatori, Carte& terra, Carta& chiamata) {
 
 	if (cartaATerra != nullptr) {
 		for (int i = 0; i < 5; i++) 
-			if (strcmp(giocatori[i]->getNome(), cartaATerra->getProprietario()) == 0)
+			if (giocatori[i]->getNome() == cartaATerra->getProprietario())
 				giocatori[i]->setCompagno(true);
 	}
 
@@ -453,7 +453,7 @@ int AssegnaPunti(Giocatore**& giocatori, Carte& terra, Segno briscola) {
 	}
 
 	for (int i = 0; i < 5; i++) {
-		if (strcmp(giocatori[i]->getNome(), max->getProprietario()) == 0) {
+		if (giocatori[i]->getNome() == max->getProprietario()) {
 			giocatori[i]->prendiPunti(terra.totPunti());
 			return i;
 		}
@@ -471,7 +471,7 @@ Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare,
 		system("cls");
 		cout << "Carte a terra:" << endl << endl;
 		terra.Stampa(true);
-		cout << endl << "Tocca a " << ((i + 1 == 5) ? giocatori[0]->getNome() : giocatori[i + 1]->getNome()) << endl << endl;
+		if (i != 4) cout << endl << "Tocca a " << ((i + 1 == 5) ? giocatori[0]->getNome() : giocatori[i + 1]->getNome()) << endl << endl;
 		system("pause");
 		system("cls");
 		count++;
