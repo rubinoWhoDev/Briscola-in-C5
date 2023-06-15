@@ -1,4 +1,6 @@
 #pragma once
+#ifndef BRISCOLA_H
+#define BRISCOLA_H
 #include "Carte.h"
 
 class Giocatore {
@@ -39,3 +41,5 @@ int WhoIsChiamante(Giocatore**& giocatori);
 Segno GiroMorto(Giocatore**& giocatori, int punteggioMinimo, int& primoAGiocare, Carta& chiamata);
 void GiroStardard(Giocatore**& giocatori, int& primoAGiocare, Segno briscola, int punteggioMinimo, Carta& chiamata);
 void StampaVincitori(Giocatore**& giocatori, int punteggioMinimo);
+
+#endif

@@ -1,4 +1,6 @@
 #pragma once
+#ifndef CARTE_H
+#define CARTE_H
 //#include "Briscola.h"
 #include <string>
 
@@ -67,3 +69,5 @@ public:
 	//void operator=(Carte c);
 	int totPunti();
 };
+
+#endif
