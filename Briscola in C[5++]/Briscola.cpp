@@ -174,7 +174,7 @@ int GiroChiamanti(Giocatore**& giocatori, int punteggioMinimo, int primoAGiocare
 			std::cin >> input;
 		} while (input > 118);
 
-		if (input < punteggioMinimo) {
+		if (input <= punteggioMinimo) {
 			giocatori[i]->setChiamante(false);
 			system("cls");
 			cout << giocatori[i]->getNome() << " ha lasciato." << endl << endl;
